@@ -2,6 +2,11 @@
 
 return [
     /**
+     * The URL to your application, used to generate tracking URLs.
+     */
+    'url' => "http://localhost:81",
+
+    /**
      * To disable the pixel injection, set this to false.
      */
     'inject-pixel' => true,

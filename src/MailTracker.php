@@ -116,8 +116,10 @@ class MailTracker
 
     protected function injectTrackingPixel($html, $hash)
     {
+        $url = config('mail-tracker.url') . '/email/t/' . $hash;
+
         // Append the tracking url
-        $tracking_pixel = '<img border=0 width=1 alt="" height=1 src="' . route('mailTracker_t', [$hash]) . '" />';
+        $tracking_pixel = '<img border=0 width=1 alt="" height=1 src="' . $url . '" />';
 
         $linebreak = app(Str::class)->random(32);
         $html = str_replace("\n", $linebreak, $html);
@@ -153,13 +155,9 @@ class MailTracker
             $url = str_replace('&amp;', '&', $matches[2]);
         }
 
-        return $matches[1] . route(
-            'mailTracker_n',
-            [
-                'l' => $url,
-                'h' => $this->hash
-            ]
-        );
+        $path = '/email/n?l=' . urlencode($url) . '&h=' . $this->hash;
+
+        return $matches[1] . config('mail-tracker.url') . $path;
     }
 
     /**
